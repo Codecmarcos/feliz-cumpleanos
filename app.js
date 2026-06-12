@@ -38,16 +38,39 @@ const days = [
     title: "Algo para sonreír",
   },
   {
-    question: "¿Cuál es la capital de Portugal?",
-    answers: ["lisboa"],
-    hints: ["Está junto al río Tajo.", "Tiene tranvías amarillos.", "Empieza por L."],
+    question: "¿Qué es aquello que jamás podré decirte?",
+    answers: [
+      "mentiras",
+      "mentira",
+      "una mentira",
+      "las mentiras",
+    ],
+    hints: [
+      "Siempre me las pillas.",
+      "Destruyen una relación.",
+      "Jamás te las diré.",
+    ],
+    successTitle: "¡Enhorabuena!",
+    successMessage:
+      "Vaya, esta no era tan fácil. ¿Has necesitado las pistas? Jajaja. Pues sí, en efecto: las mentiras representan el principio del fin. No es solo que se me den mal, sino que son incompatibles con el amor. ¿Podrás oír unas cuantas?",
+    giftButton: "Abrir el regalo del día 3",
     video: "ysz5S6PUM-U",
     title: "La tercera pieza",
   },
   {
-    question: "¿Qué animal aparece en el escudo de Madrid?",
-    answers: ["oso", "un oso"],
-    hints: ["Aparece junto a un árbol.", "Es un mamífero.", "Le gusta bastante la miel."],
+    question: "Hoy es tu cumpleaños, ¡hay que hacer algo especial! Subamos la dificultad: ¿de qué joven se enamoró perdidamente Afrodita?",
+    answers: [
+      "adonis",
+      "adónis",
+    ],
+    hints: [
+      "Es un mito muy conocido de la mitología griega.",
+      "Ambos son referentes del amor romántico y la belleza.",
+    ],
+    successTitle: "¡Bueeeeno! Aquí estás un día más.",
+    successMessage:
+      "Me alegro mucho de que estés tomándotelo en serio. Hoy es tu día, mi amor. El primer cumpleaños de muchos a tu lado. No diría que soy un Adonis, pero sí que tuve su suerte al encontrar a mi Afrodita. Te amo con locura. Muchas felicidades, mi chica guapa.",
+    giftButton: "Abrir mi regalo de cumpleaños",
     video: "jNQXAC9IVRw",
     title: "A mitad del camino",
   },
