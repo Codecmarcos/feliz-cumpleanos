@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7efe5" />
+    <title>Siete días para ti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="hero">
+      <nav>
+        <a class="brand" href="#" aria-label="Inicio">7<span>·</span>7</a>
+        <button class="quiet-button" id="resetButton" type="button">Reiniciar demo</button>
+      </nav>
+
+      <div class="hero-copy">
+        <p class="eyebrow">UNA PEQUEÑA AVENTURA</p>
+        <h1>Siete días.<br /><em>Siete sorpresas.</em></h1>
+        <p class="intro">
+          Cada día te espera una pregunta. Encuentra la respuesta correcta
+          y descubre lo que hay detrás.
+        </p>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-copy">
+          <span>Tu camino</span>
+          <strong id="progressText">0 de 7 descubiertos</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="today-section" id="todaySection">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">HOY</p>
+            <h2 id="todayTitle">Tu primera pista</h2>
+          </div>
+          <span class="day-pill" id="todayPill">DÍA 1</span>
+        </div>
+        <div id="challenge"></div>
+      </section>
+
+      <section class="journey-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">EL RECORRIDO</p>
+            <h2>Lo que llevas descubierto</h2>
+          </div>
+        </div>
+        <div class="days-grid" id="daysGrid"></div>
+      </section>
+
+      <section class="demo-panel" aria-labelledby="demoTitle">
+        <div>
+          <p class="eyebrow">MODO DEMOSTRACIÓN</p>
+          <h2 id="demoTitle">Viaja al futuro</h2>
+          <p>Adelanta los días para probar toda la experiencia ahora mismo.</p>
+        </div>
+        <div class="demo-controls">
+          <label for="daySelect">Día visible</label>
+          <select id="daySelect">
+            <option value="1">Día 1</option>
+            <option value="2">Día 2</option>
+            <option value="3">Día 3</option>
+            <option value="4">Día 4</option>
+            <option value="5">Día 5</option>
+            <option value="6">Día 6</option>
+            <option value="7">Día 7</option>
+          </select>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Hecho con cariño, para alguien especial.</span>
+      <span>Una sorpresa cada día.</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
