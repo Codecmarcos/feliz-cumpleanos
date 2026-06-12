@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -50,6 +54,12 @@
           </svg>
           <span>Feliz cumpleaños<br />y feliz vida</span>
         </a>
+        <div class="header-timer" aria-label="Tiempo restante">
+          <span>TIEMPO RESTANTE</span>
+          <strong>
+            <b id="timerHours">00</b><i>:</i><b id="timerMinutes">00</b><i>:</i><b id="timerSeconds">00</b>
+          </strong>
+        </div>
         <nav class="main-nav" aria-label="Navegación principal">
           <a href="#inicio" data-route="home">Hoy</a>
           <a href="#archivo" data-route="archive">Archivo</a>
@@ -91,7 +101,7 @@
                 <p>
                   <span>02</span>
                   Me aseguro de que guardes unos minutos todos los días para
-                  verme la cara y recordar a <strong>TU PERSONA</strong>.
+                  verme la cara y recordar a TU PERSONA.
                 </p>
               </div>
               <p>
@@ -109,18 +119,6 @@
                 la vida. <strong>Te lo mereces.</strong>
               </p>
             </div>
-          </section>
-
-          <section class="timer-section" aria-labelledby="timerTitle">
-            <p class="eyebrow" id="timerTitle">TIEMPO RESTANTE</p>
-            <div class="timer" id="timer" aria-live="polite">
-              <div><strong id="timerHours">00</strong><span>horas</span></div>
-              <i>:</i>
-              <div><strong id="timerMinutes">00</strong><span>minutos</span></div>
-              <i>:</i>
-              <div><strong id="timerSeconds">00</strong><span>segundos</span></div>
-            </div>
-            <p class="timer-note">A medianoche, este regalo se marcha al archivo.</p>
           </section>
 
           <section class="daily-challenge" id="dailyChallenge"></section>

@@ -122,13 +122,18 @@ h1, h2, h3 {
 .line-form.is-wrong, .answer-form.is-wrong { animation: shake .28s ease; }
 
 .site-header {
-  min-height: 88px;
+  min-height: 86px;
   padding: 0 max(5vw, 24px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 28px;
   border-bottom: 1px solid var(--line);
   background: var(--mist);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 8px 25px rgba(23, 63, 42, .04);
 }
 .brand {
   display: flex;
@@ -154,6 +159,38 @@ h1, h2, h3 {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.header-timer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  white-space: nowrap;
+}
+.header-timer > span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+.header-timer strong {
+  padding: 7px 10px 6px;
+  display: flex;
+  align-items: center;
+  color: #34734a;
+  background: rgba(23, 63, 42, .07);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .03em;
+  font-variant-numeric: tabular-nums;
+}
+.header-timer b { font-weight: 400; }
+.header-timer i {
+  padding: 0 2px;
+  opacity: .5;
+  font-style: normal;
+}
 .main-nav { display: flex; gap: 28px; }
 .main-nav a {
   padding: 28px 0 25px;
@@ -169,8 +206,8 @@ h1, h2, h3 {
 
 .home-page { background: var(--white); }
 .home-intro {
-  min-height: 620px;
-  padding: 110px max(7vw, 28px) 82px;
+  min-height: 430px;
+  padding: 72px max(7vw, 28px) 58px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -178,8 +215,8 @@ h1, h2, h3 {
   background: var(--mist);
 }
 .home-intro h1, .archive-page h1 {
-  font-size: clamp(68px, 11vw, 142px);
-  line-height: .83;
+  font-size: clamp(62px, 9vw, 122px);
+  line-height: .84;
 }
 .home-intro h1 span {
   color: var(--leaf);
@@ -191,9 +228,9 @@ h1, h2, h3 {
 .intro-heading::after {
   content: "";
   position: absolute;
-  width: 76px;
-  height: 76px;
-  right: -105px;
+  width: 62px;
+  height: 62px;
+  right: -88px;
   bottom: 8px;
   border: 1px solid var(--sage);
   border-radius: 50%;
@@ -270,10 +307,6 @@ h1, h2, h3 {
   font-weight: 600;
   letter-spacing: .12em;
 }
-.letter-points strong {
-  color: var(--forest);
-  font-weight: 600;
-}
 .letter-closing {
   margin-top: 48px !important;
   padding-left: 24px;
@@ -284,48 +317,6 @@ h1, h2, h3 {
 .letter-closing strong {
   color: var(--forest);
   font-weight: 600;
-}
-
-.timer-section {
-  padding: 86px max(7vw, 28px);
-  text-align: center;
-  background: var(--forest);
-}
-.timer-section .eyebrow { color: #bdcdbf; }
-.timer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: clamp(8px, 3vw, 44px);
-  color: white;
-}
-.timer div { min-width: clamp(80px, 16vw, 190px); }
-.timer strong {
-  display: block;
-  font-family: "Manrope", sans-serif;
-  font-size: clamp(60px, 12vw, 144px);
-  font-weight: 400;
-  line-height: .95;
-  letter-spacing: -.08em;
-}
-.timer span {
-  color: rgba(255,255,255,.52);
-  font-size: 10px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.timer i {
-  padding-top: clamp(7px, 2vw, 20px);
-  color: rgba(255,255,255,.32);
-  font-family: "Manrope", sans-serif;
-  font-size: clamp(38px, 7vw, 80px);
-  font-style: normal;
-  font-weight: 400;
-}
-.timer-note {
-  margin: 34px 0 0;
-  color: rgba(255,255,255,.52);
-  font-size: 12px;
 }
 
 .daily-challenge { padding: 105px max(7vw, 28px); }
@@ -566,6 +557,7 @@ footer {
 }
 
 @media (max-width: 850px) {
+  .header-timer > span { display: none; }
   .home-intro { align-items: flex-start; flex-direction: column; }
   .gift-letter { grid-template-columns: 1fr; gap: 50px; }
   .letter-heading { position: static; }
@@ -578,19 +570,42 @@ footer {
 
 @media (max-width: 620px) {
   .access-screen { padding: 24px; }
-  .site-header { min-height: 74px; }
-  .brand { gap: 8px; }
-  .cake-icon { width: 30px; height: 30px; }
-  .brand span { font-size: 9px; }
-  .main-nav { gap: 20px; }
-  .main-nav a { padding: 27px 0 24px; }
-  .home-intro {
-    min-height: 590px;
-    padding-top: 82px;
-    padding-bottom: 58px;
-    gap: 55px;
+  .site-header {
+    min-height: 118px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 12px;
+    padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 8px 14px;
   }
-  .home-intro h1, .archive-page h1 { font-size: clamp(59px, 19vw, 82px); }
+  .brand { gap: 8px; }
+  .cake-icon { width: 27px; height: 27px; }
+  .brand span { display: block; font-size: 8px; }
+  .header-timer {
+    width: 100%;
+    margin-left: 0;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: space-between;
+  }
+  .header-timer > span { display: block; font-size: 7px; }
+  .header-timer strong {
+    padding: 6px 8px 5px;
+    font-size: 20px;
+  }
+  .main-nav { grid-column: 2; grid-row: 1; gap: 13px; }
+  .main-nav a { font-size: 10px; }
+  .main-nav a { padding: 10px 0 7px; }
+  .home-intro {
+    min-height: 420px;
+    padding-top: 58px;
+    padding-bottom: 46px;
+    gap: 42px;
+  }
+  .home-intro h1, .archive-page h1 { font-size: clamp(56px, 17vw, 74px); }
   .intro-heading::after { display: none; }
   .gift-letter {
     padding-top: 76px;
@@ -606,12 +621,6 @@ footer {
     font-size: 15px;
   }
   .letter-closing { margin-top: 38px !important; font-size: 17px; }
-  .timer-section { padding-top: 65px; padding-bottom: 65px; }
-  .timer { gap: 8px; }
-  .timer div { min-width: 76px; }
-  .timer strong { font-size: clamp(54px, 19vw, 76px); }
-  .timer i { padding-top: 7px; font-size: 38px; }
-  .timer span { font-size: 8px; }
   .daily-challenge { padding-top: 72px; padding-bottom: 72px; }
   .question-main { padding-top: 42px; padding-bottom: 45px; }
   .question-main h2 { font-size: 38px; }
