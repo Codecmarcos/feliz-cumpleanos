@@ -58,10 +58,9 @@ const days = [
     title: "La tercera pieza",
   },
   {
-    question: "Hoy es tu cumpleaños, ¡hay que hacer algo especial! Subamos la dificultad: ¿de qué joven se enamoró perdidamente Afrodita?",
+    question: "Hoy es tu cumpleaños, ¡hay que hacer algo especial! Subamos la dificultad: ¿qué diosa de la mitología griega se enamoró perdidamente de un hombre más joven que ella?",
     answers: [
-      "adonis",
-      "adónis",
+      "afrodita",
     ],
     hints: [
       "Es un mito muy conocido de la mitología griega.",
