@@ -74,23 +74,63 @@ const days = [
     title: "A mitad del camino",
   },
   {
-    question: "¿Cuántos lados tiene un hexágono?",
-    answers: ["6", "seis"],
-    hints: ["Tiene más lados que un cuadrado.", "Tiene menos que un octógono.", "Piensa en un panal."],
+    question: "En el mundo hay un montón de seres vivos. Este te encanta, y más ahora que le estamos cambiando el significado a su aroma. ¿De qué ser vivo estamos hablando?",
+    answers: [
+      "flores",
+      "las flores",
+      "flor",
+      "una flor",
+    ],
+    hints: [
+      "Su olor te encanta.",
+      "Ya no significan lo mismo.",
+      "Hay de muchos colores.",
+    ],
+    successTitle: "Esta estaba chuuupada, ¿eh?",
+    successMessage:
+      "Espero que estés disfrutando del viaje y de tus amigas. Me alegra haber hecho este regalo así porque, de alguna forma, me siento presente en tu día a día. PD: me acabo de sentar en tu sofá mientras tú curras porque se te van los ojos, tramposa. Jajaja. Te amo mucho, mi niña bonita.",
+    giftButton: "Abrir el regalo del día 5",
     video: "aqz-KE-bpKQ",
     title: "La quinta sorpresa",
   },
   {
-    question: "¿Cuál de estos instrumentos tiene teclas y pedales?",
-    answers: ["piano", "el piano"],
-    hints: ["Puede ser de cola.", "Suele tener 88 teclas.", "Mozart sabía tocarlo."],
+    question: "¿Quién ha leído nuestra conversación desde el principio y nos da su opinión cuando no llegamos a un entendimiento intermedio?",
+    answers: [
+      "chatgpt",
+      "chat gpt",
+      "el chatgpt",
+      "chat",
+      "gpt",
+    ],
+    hints: [
+      "No pienses en una persona.",
+      "Es inteligente, bastante.",
+      "Solo podemos hablar con él por chat.",
+    ],
+    successTitle: "¡Correcto! Hasta ChatGPT está de acuerdo.",
+    successMessage:
+      "Parece que también forma parte de esta historia después de haber leído nuestras conversaciones y opinar en más de un desacuerdo. Hoy le toca confirmar que has vuelto a acertar.",
+    giftButton: "Abrir el regalo del día 6",
     video: "ScMzIvxBSi4",
     title: "Ya casi estás",
   },
   {
-    question: "¿Qué número completa la serie: 2, 4, 6, 8...?",
-    answers: ["10", "diez"],
-    hints: ["Todos son números pares.", "Avanza de dos en dos.", "Es el primero de dos cifras."],
+    question: "Se te llena la boca llamándome así y a mí me hace mucha gracia oírtelo decir. ¿Cuál es nuestro insulto favorito?",
+    answers: [
+      "gilipollas",
+      "gilipolla",
+      "eres gilipollas",
+      "mi gilipollas",
+    ],
+    hints: [
+      "Me río mucho cuando me llamas así.",
+      "No debería reírme cuando me insultas.",
+      "Te encanta llamármelo.",
+    ],
+    successTitle: "¡Heey! Enhorabuena, has llegado al último día.",
+    successMessage:
+      "¿Recuerdas cuando estaba en tu sofá haciendo toda esta movida? No recordaba el título del último poema... y justo vas tú y me llamas gilipollas. ¡JAJAJAJA! Estamos superconectados. Mi amor, tanto el regalo como este viaje han llegado a su fin. Espero que hayas disfrutado de ambos. Estoy deseando verte y que me cuentes en persona cómo has vivido todo esto. Te hablo desde el 12 de junio, pero no hace falta ser un lumbreras para adelantar que te echo muchísimo de menos. Adelante, ve a por el último regalo.",
+    giftButton: "Abrir el último regalo",
     video: "L_jWHffIx5E",
     title: "El gran final",
   },
@@ -102,6 +142,7 @@ const ACCESS_PASSWORD = "libelula110426";
 const ARCHIVE_PASSWORD = "archivo110426";
 const PROGRESS_KEY = "feliz-cumpleanos-completed-days";
 const ACCESS_KEY = "feliz-cumpleanos-access";
+let reviewDayIndex = null;
 
 const completedDays = new Set(
   JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]"),
@@ -133,16 +174,18 @@ function normalize(value) {
     .toLocaleLowerCase("es")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[¿?¡!.,]/g, "")
-    .replace(/\s+/g, " ");
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function getJourneyState() {
   const now = Date.now();
   const start = new Date(START_DATE).getTime();
   const elapsed = now - start;
-  const dayIndex = Math.floor(elapsed / 86400000);
-  const nextReset = start + (dayIndex + 1) * 86400000;
+  const realDayIndex = Math.floor(elapsed / 86400000);
+  const dayIndex = reviewDayIndex ?? realDayIndex;
+  const nextReset = start + (realDayIndex + 1) * 86400000;
 
   return {
     dayIndex,
@@ -287,12 +330,26 @@ function renderDailyChallenge() {
       </div>
       <div class="hints">
         <p class="eyebrow">ALGUNAS PISTAS</p>
-        <ol>
-          ${day.hints.map((hint) => `<li>${hint}</li>`).join("")}
-        </ol>
+        <div class="hint-list">
+          ${day.hints.map((hint, index) => `
+            <button class="hint-card" type="button" aria-expanded="false">
+              <span class="hint-card-inner">
+                <span class="hint-front">PISTA ${String(index + 1).padStart(2, "0")}</span>
+                <span class="hint-back">${hint}</span>
+              </span>
+            </button>
+          `).join("")}
+        </div>
       </div>
     </article>
   `;
+
+  document.querySelectorAll(".hint-card").forEach((hintCard) => {
+    hintCard.addEventListener("click", () => {
+      const isRevealed = hintCard.classList.toggle("is-revealed");
+      hintCard.setAttribute("aria-expanded", String(isRevealed));
+    });
+  });
 
   const answerForm = document.querySelector("#answerForm");
   const writtenAnswer = document.querySelector("#writtenAnswer");
@@ -451,6 +508,51 @@ archiveForm.addEventListener("submit", (event) => {
 });
 
 window.addEventListener("hashchange", route);
+
+const reviewControls = document.querySelector("#reviewControls");
+const reviewDayLabel = document.querySelector("#reviewDayLabel");
+const reviewPrevious = document.querySelector("#reviewPrevious");
+const reviewNext = document.querySelector("#reviewNext");
+const reviewToday = document.querySelector("#reviewToday");
+
+function updateReviewControls() {
+  const realDayIndex = Math.floor(
+    (Date.now() - new Date(START_DATE).getTime()) / 86400000,
+  );
+  const visibleDay = reviewDayIndex ?? Math.min(Math.max(realDayIndex, 0), days.length - 1);
+
+  reviewDayLabel.textContent = `Día ${visibleDay + 1} de 7`;
+  reviewPrevious.disabled = visibleDay === 0;
+  reviewNext.disabled = visibleDay === days.length - 1;
+  reviewToday.hidden = reviewDayIndex === null;
+}
+
+function showReviewDay(dayIndex) {
+  reviewDayIndex = Math.min(Math.max(dayIndex, 0), days.length - 1);
+  window.location.hash = "#inicio";
+  renderDailyChallenge();
+  updateReviewControls();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+reviewPrevious.addEventListener("click", () => {
+  const current = getJourneyState().dayIndex;
+  showReviewDay(current - 1);
+});
+
+reviewNext.addEventListener("click", () => {
+  const current = getJourneyState().dayIndex;
+  showReviewDay(current + 1);
+});
+
+reviewToday.addEventListener("click", () => {
+  reviewDayIndex = null;
+  renderDailyChallenge();
+  updateReviewControls();
+});
+
+reviewControls.hidden = false;
+updateReviewControls();
 renderCounts();
 initializeAccess();
 updateTimer();

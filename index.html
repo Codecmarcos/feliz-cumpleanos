@@ -197,6 +197,15 @@
         <span>Feliz cumpleaños.</span>
         <span>Siete días. Siete regalos.</span>
       </footer>
+      <aside class="review-controls" id="reviewControls" hidden aria-label="Modo de revisión temporal">
+        <span>MODO REVISIÓN</span>
+        <div>
+          <button id="reviewPrevious" type="button" aria-label="Ver día anterior">←</button>
+          <strong id="reviewDayLabel">Día 1 de 7</strong>
+          <button id="reviewNext" type="button" aria-label="Ver día siguiente">→</button>
+        </div>
+        <button class="review-today" id="reviewToday" type="button">Volver al día real</button>
+      </aside>
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
