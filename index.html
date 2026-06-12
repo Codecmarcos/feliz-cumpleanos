@@ -16,12 +16,12 @@
   <body>
     <section class="access-screen" id="accessScreen">
       <div class="access-card">
-        <span class="access-mark" aria-hidden="true">✦</span>
-        <p class="access-label">ACCESO PRIVADO</p>
+        <span class="round-mark" aria-hidden="true">✦</span>
+        <p class="eyebrow light">ACCESO PRIVADO</p>
         <h1 class="access-title">Hay algo<br />esperando dentro.</h1>
-        <form class="access-form" id="accessForm">
+        <form class="line-form" id="accessForm">
           <label class="sr-only" for="accessPassword">Clave de acceso</label>
-          <div class="password-field">
+          <div class="line-field light-field">
             <input
               id="accessPassword"
               type="password"
@@ -31,7 +31,7 @@
             />
             <button type="submit" aria-label="Entrar">→</button>
           </div>
-          <p class="access-error" id="accessError" role="alert" aria-live="polite"></p>
+          <p class="form-error light-error" id="accessError" role="alert" aria-live="polite"></p>
         </form>
         <p class="access-warning">
           Si no sabes la contraseña, aléjate despacio. Ya hemos avisado al
@@ -41,82 +41,123 @@
     </section>
 
     <div class="site-shell" id="siteShell" hidden>
-    <header class="hero">
-      <nav>
-        <a class="brand" href="#" aria-label="Inicio">7<span>·</span>7</a>
-        <button class="quiet-button" id="resetButton" type="button">Reiniciar demo</button>
-      </nav>
+      <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="Ir al inicio">7<span>·</span>7</a>
+        <nav class="main-nav" aria-label="Navegación principal">
+          <a href="#inicio" data-route="home">Hoy</a>
+          <a href="#archivo" data-route="archive">Archivo</a>
+        </nav>
+      </header>
 
-      <div class="hero-copy">
-        <p class="eyebrow">UNA PEQUEÑA AVENTURA</p>
-        <h1>Siete días.<br /><em>Siete sorpresas.</em></h1>
-        <p class="intro">
-          Cada día te espera una pregunta. Encuentra la respuesta correcta
-          y descubre lo que hay detrás.
-        </p>
-      </div>
+      <main>
+        <section class="home-page" id="homePage">
+          <div class="home-intro">
+            <div>
+              <p class="eyebrow" id="dayEyebrow">DÍA 1 DE 7</p>
+              <h1>El regalo<br />de hoy.</h1>
+              <p class="home-subtitle">
+                Una pregunta, una oportunidad y veinticuatro horas para
+                descubrir lo que hay detrás.
+              </p>
+            </div>
 
-      <div class="progress-wrap">
-        <div class="progress-copy">
-          <span>Tu camino</span>
-          <strong id="progressText">0 de 7 descubiertos</strong>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <section class="today-section" id="todaySection">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">HOY</p>
-            <h2 id="todayTitle">Tu primera pista</h2>
+            <div class="completion-count">
+              <strong id="completedCount">0</strong>
+              <span>días completados<br />de siete</span>
+            </div>
           </div>
-          <span class="day-pill" id="todayPill">DÍA 1</span>
-        </div>
-        <div id="challenge"></div>
-      </section>
 
-      <section class="journey-section">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">EL RECORRIDO</p>
-            <h2>Lo que llevas descubierto</h2>
+          <section class="timer-section" aria-labelledby="timerTitle">
+            <p class="eyebrow" id="timerTitle">TIEMPO RESTANTE</p>
+            <div class="timer" id="timer" aria-live="polite">
+              <div><strong id="timerHours">00</strong><span>horas</span></div>
+              <i>:</i>
+              <div><strong id="timerMinutes">00</strong><span>minutos</span></div>
+              <i>:</i>
+              <div><strong id="timerSeconds">00</strong><span>segundos</span></div>
+            </div>
+            <p class="timer-note">A medianoche, este regalo se marcha al archivo.</p>
+          </section>
+
+          <section class="daily-challenge" id="dailyChallenge"></section>
+
+          <aside class="archive-invitation">
+            <div>
+              <p class="eyebrow light">OBJETOS PERDIDOS</p>
+              <h2>¿Buscas un día anterior?</h2>
+            </div>
+            <div>
+              <p>
+                Desde la dirección se recomienda contestar la pregunta y
+                descubrir el regalo antes de que el contador se reinicie. Si
+                te has perdido alguno, tranquila: lo estamos archivando. Pero
+                cuidado con entrar... no todo es tan fácil como parece.
+              </p>
+              <a class="text-link light-link" href="#archivo">Entrar al archivo →</a>
+            </div>
+          </aside>
+        </section>
+
+        <section class="archive-page" id="archivePage" hidden>
+          <div class="archive-locked" id="archiveLocked">
+            <p class="eyebrow">ARCHIVO · ACCESO RESTRINGIDO</p>
+            <h1>¿Aaaah, vienes<br />buscando algo?</h1>
+            <div class="archive-copy">
+              <p>
+                ¿Ayer no pudiste ver el vídeo y te lo has perdido? Lo siento
+                mucho, pero el archivo está defendido por una contraseña
+                inexpugnable que solo tiene el administrador. Puedes
+                pedírsela, pero... ¿le vas a contar por qué no abriste tu
+                regalo?
+              </p>
+              <p>
+                Si estás aquí porque un vídeo te gustó mucho y quieres volver
+                a verlo, no te preocupes: registramos los días que has
+                completado. Si los haces todos, cuando termine el viaje podrás
+                descargarlos. Pero para eso... más vale que sea cierto el
+                propósito de tu visita.
+              </p>
+            </div>
+
+            <form class="line-form archive-form" id="archiveForm">
+              <label class="sr-only" for="archivePassword">Clave del archivo</label>
+              <div class="line-field">
+                <input
+                  id="archivePassword"
+                  type="password"
+                  placeholder="Clave del administrador"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <button type="submit" aria-label="Abrir archivo">→</button>
+              </div>
+              <p class="form-error" id="archiveError" role="alert" aria-live="polite"></p>
+            </form>
           </div>
-        </div>
-        <div class="days-grid" id="daysGrid"></div>
-      </section>
 
-      <section class="demo-panel" aria-labelledby="demoTitle">
-        <div>
-          <p class="eyebrow">MODO DEMOSTRACIÓN</p>
-          <h2 id="demoTitle">Viaja al futuro</h2>
-          <p>Adelanta los días para probar toda la experiencia ahora mismo.</p>
-        </div>
-        <div class="demo-controls">
-          <label for="daySelect">Día visible</label>
-          <select id="daySelect">
-            <option value="1">Día 1</option>
-            <option value="2">Día 2</option>
-            <option value="3">Día 3</option>
-            <option value="4">Día 4</option>
-            <option value="5">Día 5</option>
-            <option value="6">Día 6</option>
-            <option value="7">Día 7</option>
-          </select>
-        </div>
-      </section>
-    </main>
+          <div class="archive-open" id="archiveOpen" hidden>
+            <div class="archive-heading">
+              <div>
+                <p class="eyebrow">ARCHIVO DESCLASIFICADO</p>
+                <h1>Los días<br />que ya pasaron.</h1>
+              </div>
+              <div class="completion-count">
+                <strong id="archiveCompletedCount">0</strong>
+                <span>días vistos<br />de siete</span>
+              </div>
+            </div>
+            <div class="archive-grid" id="archiveGrid"></div>
+          </div>
+        </section>
+      </main>
 
-    <footer>
-      <span>Hecho con cariño, para alguien especial.</span>
-      <span>Una sorpresa cada día.</span>
-    </footer>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <footer>
+        <span>Feliz cumpleaños.</span>
+        <span>Siete días. Siete regalos.</span>
+      </footer>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
+
     <script src="app.js"></script>
   </body>
 </html>

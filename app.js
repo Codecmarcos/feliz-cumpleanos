@@ -1,90 +1,119 @@
 const days = [
   {
     question: "¿Qué planeta es conocido como el planeta rojo?",
-    answers: ["Venus", "Marte", "Júpiter", "Mercurio"],
-    correct: 1,
+    answers: ["marte"],
+    hints: ["No es el más cercano al Sol.", "Su nombre viene de un dios romano.", "Tiene dos lunas."],
     video: "dQw4w9WgXcQ",
     title: "La primera sorpresa",
-    accent: "#496b50",
   },
   {
     question: "¿Cuántos minutos tiene una hora y media?",
-    answers: ["60", "75", "90", "120"],
-    correct: 2,
+    answers: ["90", "noventa"],
+    hints: ["Una hora son 60 minutos.", "Media hora son 30.", "Solo tienes que sumarlos."],
     video: "M7lc1UVf-VE",
     title: "Algo para sonreír",
-    accent: "#66856b",
   },
   {
     question: "¿Cuál es la capital de Portugal?",
-    answers: ["Oporto", "Coímbra", "Lisboa", "Braga"],
-    correct: 2,
+    answers: ["lisboa"],
+    hints: ["Está junto al río Tajo.", "Tiene tranvías amarillos.", "Empieza por L."],
     video: "ysz5S6PUM-U",
     title: "La tercera pieza",
-    accent: "#365b43",
   },
   {
     question: "¿Qué animal aparece en el escudo de Madrid?",
-    answers: ["Un lobo", "Un oso", "Un águila", "Un caballo"],
-    correct: 1,
+    answers: ["oso", "un oso"],
+    hints: ["Aparece junto a un árbol.", "Es un mamífero.", "Le gusta bastante la miel."],
     video: "jNQXAC9IVRw",
     title: "A mitad del camino",
-    accent: "#78957b",
   },
   {
     question: "¿Cuántos lados tiene un hexágono?",
-    answers: ["Cinco", "Seis", "Siete", "Ocho"],
-    correct: 1,
+    answers: ["6", "seis"],
+    hints: ["Tiene más lados que un cuadrado.", "Tiene menos que un octógono.", "Piensa en un panal."],
     video: "aqz-KE-bpKQ",
     title: "La quinta sorpresa",
-    accent: "#56765f",
   },
   {
-    question: "¿Cuál de estos instrumentos tiene teclas?",
-    answers: ["Violín", "Trompeta", "Piano", "Arpa"],
-    correct: 2,
+    question: "¿Cuál de estos instrumentos tiene teclas y pedales?",
+    answers: ["piano", "el piano"],
+    hints: ["Puede ser de cola.", "Suele tener 88 teclas.", "Mozart sabía tocarlo."],
     video: "ScMzIvxBSi4",
     title: "Ya casi estás",
-    accent: "#2f5940",
   },
   {
     question: "¿Qué número completa la serie: 2, 4, 6, 8...?",
-    answers: ["9", "10", "11", "12"],
-    correct: 1,
+    answers: ["10", "diez"],
+    hints: ["Todos son números pares.", "Avanza de dos en dos.", "Es el primero de dos cifras."],
     video: "L_jWHffIx5E",
     title: "El gran final",
-    accent: "#173f2a",
   },
 ];
 
-const STORAGE_KEY = "siete-dias-demo-progress";
+// Cambia esta fecha cuando se decida el día real de comienzo.
+const START_DATE = "2026-06-12T00:00:00+02:00";
+const ACCESS_PASSWORD = "libelula110426";
+const ARCHIVE_PASSWORD = "archivo110426";
+const PROGRESS_KEY = "feliz-cumpleanos-completed-days";
 const ACCESS_KEY = "feliz-cumpleanos-access";
-const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-const state = {
-  currentDay: Number(localStorage.getItem("siete-dias-demo-day") || 1),
-  unlocked: new Set(saved),
-};
 
-const challenge = document.querySelector("#challenge");
-const daysGrid = document.querySelector("#daysGrid");
-const progressText = document.querySelector("#progressText");
-const progressBar = document.querySelector("#progressBar");
-const daySelect = document.querySelector("#daySelect");
-const todayTitle = document.querySelector("#todayTitle");
-const todayPill = document.querySelector("#todayPill");
-const toast = document.querySelector("#toast");
+const completedDays = new Set(
+  JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]"),
+);
+
 const accessScreen = document.querySelector("#accessScreen");
+const siteShell = document.querySelector("#siteShell");
 const accessForm = document.querySelector("#accessForm");
 const accessPassword = document.querySelector("#accessPassword");
 const accessError = document.querySelector("#accessError");
-const siteShell = document.querySelector("#siteShell");
+const homePage = document.querySelector("#homePage");
+const archivePage = document.querySelector("#archivePage");
+const archiveLocked = document.querySelector("#archiveLocked");
+const archiveOpen = document.querySelector("#archiveOpen");
+const archiveForm = document.querySelector("#archiveForm");
+const archivePassword = document.querySelector("#archivePassword");
+const archiveError = document.querySelector("#archiveError");
+const dailyChallenge = document.querySelector("#dailyChallenge");
+const archiveGrid = document.querySelector("#archiveGrid");
+const completedCount = document.querySelector("#completedCount");
+const archiveCompletedCount = document.querySelector("#archiveCompletedCount");
+const dayEyebrow = document.querySelector("#dayEyebrow");
+const toast = document.querySelector("#toast");
 
-function normalizePassword(value) {
+function normalize(value) {
   return value
     .trim()
     .toLocaleLowerCase("es")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function getJourneyState() {
+  const now = Date.now();
+  const start = new Date(START_DATE).getTime();
+  const elapsed = now - start;
+  const dayIndex = Math.floor(elapsed / 86400000);
+  const nextReset = start + (dayIndex + 1) * 86400000;
+
+  return {
+    dayIndex,
+    nextReset,
+    hasStarted: dayIndex >= 0,
+    hasEnded: dayIndex >= days.length,
+  };
+}
+
+function saveProgress() {
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify([...completedDays]));
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  window.clearTimeout(showToast.timer);
+  showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2300);
 }
 
 function openSite() {
@@ -92,6 +121,7 @@ function openSite() {
   accessScreen.hidden = true;
   siteShell.hidden = false;
   document.body.classList.remove("access-locked");
+  route();
 }
 
 function initializeAccess() {
@@ -104,47 +134,45 @@ function initializeAccess() {
   accessPassword.focus();
 }
 
-accessForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const password = normalizePassword(accessPassword.value);
+function renderCounts() {
+  completedCount.textContent = completedDays.size;
+  archiveCompletedCount.textContent = completedDays.size;
+}
 
-  if (password === "libelula110426") {
-    accessError.textContent = "";
-    openSite();
+function renderDailyChallenge() {
+  const journey = getJourneyState();
+
+  if (!journey.hasStarted) {
+    dayEyebrow.textContent = "PRÓXIMAMENTE";
+    dailyChallenge.innerHTML = `
+      <div class="empty-state">
+        <p class="eyebrow">TODAVÍA NO</p>
+        <h2>El viaje aún no ha empezado.</h2>
+        <p>Vuelve cuando llegue el primer día. La paciencia también cuenta como prueba.</p>
+      </div>
+    `;
     return;
   }
 
-  accessForm.classList.remove("is-wrong");
-  void accessForm.offsetWidth;
-  accessForm.classList.add("is-wrong");
-  accessError.textContent = "Esa no es. El comité empieza a sospechar.";
-  accessPassword.select();
-});
+  if (journey.hasEnded) {
+    dayEyebrow.textContent = "VIAJE COMPLETADO";
+    dailyChallenge.innerHTML = `
+      <div class="empty-state">
+        <p class="eyebrow">FIN DEL VIAJE</p>
+        <h2>Los siete días ya han pasado.</h2>
+        <p>El archivo guarda las pruebas. Y posiblemente algún secreto administrativo.</p>
+        <a class="text-link" href="#archivo">Ir al archivo →</a>
+      </div>
+    `;
+    return;
+  }
 
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...state.unlocked]));
-  localStorage.setItem("siete-dias-demo-day", String(state.currentDay));
-}
+  const day = days[journey.dayIndex];
+  dayEyebrow.textContent = `DÍA ${journey.dayIndex + 1} DE 7`;
 
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-  window.clearTimeout(showToast.timer);
-  showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2200);
-}
-
-function renderChallenge(index = state.currentDay - 1) {
-  const day = days[index];
-  todayTitle.textContent = state.unlocked.has(index)
-    ? day.title
-    : index === state.currentDay - 1
-      ? "Tu pista de hoy"
-      : `Sorpresa del día ${index + 1}`;
-  todayPill.textContent = `DÍA ${index + 1}`;
-
-  if (state.unlocked.has(index)) {
-    challenge.innerHTML = `
-      <article class="video-card">
+  if (completedDays.has(journey.dayIndex)) {
+    dailyChallenge.innerHTML = `
+      <article class="video-panel">
         <div class="video-frame">
           <iframe
             src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
@@ -153,119 +181,193 @@ function renderChallenge(index = state.currentDay - 1) {
             allowfullscreen
           ></iframe>
         </div>
-        <div class="video-caption">
-          <strong>${day.title}</strong>
-          <span>Día ${index + 1} de 7</span>
+        <div class="video-meta">
+          <div><span>REGALO DE HOY</span><strong>${day.title}</strong></div>
+          <span>Día ${journey.dayIndex + 1} de 7</span>
         </div>
       </article>
     `;
     return;
   }
 
-  challenge.innerHTML = `
-    <article class="challenge-card">
-      <div class="challenge-art" style="--accent: ${day.accent}">
-        <span class="art-number">${index + 1}</span>
+  dailyChallenge.innerHTML = `
+    <article class="question-panel">
+      <div class="question-main">
+        <p class="eyebrow">LA PREGUNTA DE HOY</p>
+        <h2>${day.question}</h2>
+        <form class="answer-form" id="answerForm">
+          <label for="writtenAnswer">Tu respuesta</label>
+          <div class="answer-field">
+            <input id="writtenAnswer" type="text" autocomplete="off" spellcheck="false" placeholder="Escríbela aquí" />
+            <button type="submit">Comprobar →</button>
+          </div>
+          <p class="form-error" id="answerError" role="alert" aria-live="polite"></p>
+        </form>
       </div>
-      <div class="challenge-content">
-        <span class="question-count">PREGUNTA ${index + 1} DE 7</span>
-        <h3>${day.question}</h3>
-        <div class="answers">
-          ${day.answers
-            .map(
-              (answer, answerIndex) => `
-                <button class="answer" type="button" data-answer="${answerIndex}">
-                  <span>${String.fromCharCode(65 + answerIndex)}</span>${answer}
-                </button>
-              `,
-            )
-            .join("")}
-        </div>
+      <div class="hints">
+        <p class="eyebrow">ALGUNAS PISTAS</p>
+        <ol>
+          ${day.hints.map((hint) => `<li>${hint}</li>`).join("")}
+        </ol>
       </div>
     </article>
   `;
 
-  challenge.querySelectorAll(".answer").forEach((button) => {
-    button.addEventListener("click", () => {
-      const answer = Number(button.dataset.answer);
-      if (answer === day.correct) {
-        state.unlocked.add(index);
-        save();
-        showToast("¡Correcto! Has desbloqueado la sorpresa.");
-        render();
-      } else {
-        button.classList.remove("wrong");
-        void button.offsetWidth;
-        button.classList.add("wrong");
-        showToast("Esa no era. Prueba otra vez.");
-      }
-    });
+  const answerForm = document.querySelector("#answerForm");
+  const writtenAnswer = document.querySelector("#writtenAnswer");
+  const answerError = document.querySelector("#answerError");
+
+  answerForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const proposed = normalize(writtenAnswer.value);
+    const isCorrect = day.answers.some((answer) => normalize(answer) === proposed);
+
+    if (!isCorrect) {
+      answerError.textContent = "No parece ser esa. Respira, mira las pistas y vuelve a intentarlo.";
+      answerForm.classList.remove("is-wrong");
+      void answerForm.offsetWidth;
+      answerForm.classList.add("is-wrong");
+      writtenAnswer.select();
+      return;
+    }
+
+    completedDays.add(journey.dayIndex);
+    saveProgress();
+    renderCounts();
+    renderDailyChallenge();
+    showToast("Respuesta correcta. Tu regalo está desbloqueado.");
   });
 }
 
-function renderDays() {
-  daysGrid.innerHTML = days
-    .map((day, index) => {
-      const unlocked = state.unlocked.has(index);
-      const available = index < state.currentDay && !unlocked;
-      const status = unlocked
-        ? "Descubierto"
-        : available
-          ? index === state.currentDay - 1
-            ? "Disponible hoy"
-            : "Pendiente"
-          : `En ${index - state.currentDay + 1} día${index - state.currentDay + 1 === 1 ? "" : "s"}`;
+function renderArchive() {
+  const journey = getJourneyState();
+  const previousDays = Math.min(Math.max(journey.dayIndex, 0), days.length);
 
-      return `
-        <article
-          class="day-card ${unlocked ? "unlocked" : available ? "available" : "locked"}"
-          data-day="${index}"
-          ${unlocked || available ? 'tabindex="0" role="button"' : ""}
-        >
-          <span class="day-number">${String(index + 1).padStart(2, "0")}</span>
+  if (previousDays === 0) {
+    archiveGrid.innerHTML = `
+      <div class="archive-empty">
+        <h2>Aquí todavía no hay nada.</h2>
+        <p>El archivo necesita pasado. Vuelve después del primer día.</p>
+      </div>
+    `;
+    return;
+  }
+
+  archiveGrid.innerHTML = days
+    .slice(0, previousDays)
+    .map(
+      (day, index) => `
+        <article class="archive-item">
+          <div class="archive-number">${String(index + 1).padStart(2, "0")}</div>
           <div>
-            ${!unlocked && !available ? '<div class="lock">○</div>' : ""}
-            <div class="day-status">${status}</div>
+            <span>${completedDays.has(index) ? "VISTO" : "NO COMPLETADO"}</span>
+            <h2>${day.title}</h2>
+          </div>
+          <div class="archive-video">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
+              title="${day.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
           </div>
         </article>
-      `;
-    })
+      `,
+    )
     .join("");
+}
 
-  daysGrid.querySelectorAll("[role='button']").forEach((card) => {
-    const openDay = () => {
-      renderChallenge(Number(card.dataset.day));
-      document.querySelector("#todaySection").scrollIntoView({ behavior: "smooth" });
-    };
-    card.addEventListener("click", openDay);
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") openDay();
-    });
+function openArchive() {
+  archiveLocked.hidden = true;
+  archiveOpen.hidden = false;
+  renderArchive();
+  renderCounts();
+}
+
+function updateTimer() {
+  const journey = getJourneyState();
+  let remaining = journey.nextReset - Date.now();
+
+  if (!journey.hasStarted) {
+    remaining = new Date(START_DATE).getTime() - Date.now();
+  } else if (journey.hasEnded) {
+    remaining = 0;
+  }
+
+  remaining = Math.max(0, remaining);
+  const hours = Math.floor(remaining / 3600000);
+  const minutes = Math.floor((remaining % 3600000) / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  document.querySelector("#timerHours").textContent = String(hours).padStart(2, "0");
+  document.querySelector("#timerMinutes").textContent = String(minutes).padStart(2, "0");
+  document.querySelector("#timerSeconds").textContent = String(seconds).padStart(2, "0");
+
+  if (remaining === 0) {
+    renderDailyChallenge();
+    renderArchive();
+  }
+}
+
+function route() {
+  const isArchive = window.location.hash === "#archivo";
+  homePage.hidden = isArchive;
+  archivePage.hidden = !isArchive;
+
+  document.querySelectorAll("[data-route]").forEach((link) => {
+    link.classList.toggle(
+      "active",
+      link.dataset.route === (isArchive ? "archive" : "home"),
+    );
   });
+
+  if (isArchive) {
+    archiveLocked.hidden = false;
+    archiveOpen.hidden = true;
+    archivePassword.value = "";
+    archiveError.textContent = "";
+    window.setTimeout(() => archivePassword.focus(), 0);
+  } else {
+    renderDailyChallenge();
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function render() {
-  renderChallenge();
-  renderDays();
-  progressText.textContent = `${state.unlocked.size} de 7 descubiertos`;
-  progressBar.style.width = `${(state.unlocked.size / 7) * 100}%`;
-  daySelect.value = String(state.currentDay);
-}
+accessForm.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-daySelect.addEventListener("change", () => {
-  state.currentDay = Number(daySelect.value);
-  save();
-  render();
-  showToast(`Ahora estás viendo el día ${state.currentDay}.`);
+  if (normalize(accessPassword.value) === ACCESS_PASSWORD) {
+    accessError.textContent = "";
+    openSite();
+    return;
+  }
+
+  accessError.textContent = "Esa no es. El comité empieza a sospechar.";
+  accessForm.classList.remove("is-wrong");
+  void accessForm.offsetWidth;
+  accessForm.classList.add("is-wrong");
+  accessPassword.select();
 });
 
-document.querySelector("#resetButton").addEventListener("click", () => {
-  state.unlocked.clear();
-  state.currentDay = 1;
-  save();
-  render();
-  showToast("La demo ha vuelto al día 1.");
+archiveForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (normalize(archivePassword.value) === ARCHIVE_PASSWORD) {
+    archiveError.textContent = "";
+    openArchive();
+    return;
+  }
+
+  archiveError.textContent = "Inexpugnable, te avisamos. Esa llave no abre nada.";
+  archiveForm.classList.remove("is-wrong");
+  void archiveForm.offsetWidth;
+  archiveForm.classList.add("is-wrong");
+  archivePassword.select();
 });
 
+window.addEventListener("hashchange", route);
+renderCounts();
 initializeAccess();
-render();
+updateTimer();
+window.setInterval(updateTimer, 1000);
