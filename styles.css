@@ -122,7 +122,7 @@ h1, h2, h3 {
 .line-form.is-wrong, .answer-form.is-wrong { animation: shake .28s ease; }
 
 .site-header {
-  height: 78px;
+  min-height: 88px;
   padding: 0 max(5vw, 24px);
   display: flex;
   align-items: center;
@@ -131,14 +131,29 @@ h1, h2, h3 {
   background: var(--mist);
 }
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   color: var(--forest);
-  font-family: "Manrope", sans-serif;
-  font-size: 23px;
-  font-weight: 600;
-  letter-spacing: -.06em;
   text-decoration: none;
 }
-.brand span { color: var(--sage); }
+.brand span {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.cake-icon {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .main-nav { display: flex; gap: 28px; }
 .main-nav a {
   padding: 28px 0 25px;
@@ -154,8 +169,8 @@ h1, h2, h3 {
 
 .home-page { background: var(--white); }
 .home-intro {
-  min-height: 520px;
-  padding: 96px max(7vw, 28px) 76px;
+  min-height: 620px;
+  padding: 110px max(7vw, 28px) 82px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -163,14 +178,26 @@ h1, h2, h3 {
   background: var(--mist);
 }
 .home-intro h1, .archive-page h1 {
-  font-size: clamp(64px, 10vw, 126px);
-  line-height: .88;
+  font-size: clamp(68px, 11vw, 142px);
+  line-height: .83;
 }
-.home-subtitle {
-  max-width: 480px;
-  margin: 31px 0 0;
-  color: var(--muted);
-  font-size: 17px;
+.home-intro h1 span {
+  color: var(--leaf);
+  font-weight: 400;
+}
+.intro-heading {
+  position: relative;
+}
+.intro-heading::after {
+  content: "";
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  right: -105px;
+  bottom: 8px;
+  border: 1px solid var(--sage);
+  border-radius: 50%;
+  opacity: .65;
 }
 .completion-count {
   min-width: 180px;
@@ -193,6 +220,70 @@ h1, h2, h3 {
   line-height: 1.45;
   text-transform: uppercase;
   letter-spacing: .08em;
+}
+
+.gift-letter {
+  padding: 105px max(7vw, 28px) 115px;
+  display: grid;
+  grid-template-columns: minmax(300px, .75fr) minmax(500px, 1.25fr);
+  gap: clamp(60px, 9vw, 150px);
+  background: var(--white);
+}
+.letter-heading {
+  position: sticky;
+  top: 45px;
+  align-self: start;
+}
+.letter-heading h2 {
+  max-width: 500px;
+  font-size: clamp(40px, 5vw, 66px);
+  line-height: 1.03;
+}
+.letter-body {
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.85;
+}
+.letter-body > p {
+  margin: 0 0 30px;
+}
+.letter-points {
+  margin: 45px 0 48px;
+  border-top: 1px solid var(--line);
+}
+.letter-points p {
+  margin: 0;
+  padding: 25px 0;
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.55;
+}
+.letter-points span {
+  padding-top: 4px;
+  color: var(--leaf);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+.letter-points strong {
+  color: var(--forest);
+  font-weight: 600;
+}
+.letter-closing {
+  margin-top: 48px !important;
+  padding-left: 24px;
+  border-left: 2px solid var(--leaf);
+  color: var(--ink);
+  font-size: 19px;
+}
+.letter-closing strong {
+  color: var(--forest);
+  font-weight: 600;
 }
 
 .timer-section {
@@ -476,6 +567,8 @@ footer {
 
 @media (max-width: 850px) {
   .home-intro { align-items: flex-start; flex-direction: column; }
+  .gift-letter { grid-template-columns: 1fr; gap: 50px; }
+  .letter-heading { position: static; }
   .question-panel { grid-template-columns: 1fr; }
   .question-main { padding-right: 0; }
   .hints { padding: 45px 0; border-top: 1px solid var(--line); border-left: 0; }
@@ -485,17 +578,34 @@ footer {
 
 @media (max-width: 620px) {
   .access-screen { padding: 24px; }
-  .site-header { height: 68px; }
+  .site-header { min-height: 74px; }
+  .brand { gap: 8px; }
+  .cake-icon { width: 30px; height: 30px; }
+  .brand span { font-size: 9px; }
   .main-nav { gap: 20px; }
-  .main-nav a { padding: 24px 0 21px; }
+  .main-nav a { padding: 27px 0 24px; }
   .home-intro {
-    min-height: 530px;
-    padding-top: 70px;
-    padding-bottom: 55px;
+    min-height: 590px;
+    padding-top: 82px;
+    padding-bottom: 58px;
     gap: 55px;
   }
-  .home-intro h1, .archive-page h1 { font-size: clamp(57px, 18vw, 78px); }
-  .home-subtitle { font-size: 15px; }
+  .home-intro h1, .archive-page h1 { font-size: clamp(59px, 19vw, 82px); }
+  .intro-heading::after { display: none; }
+  .gift-letter {
+    padding-top: 76px;
+    padding-bottom: 82px;
+    gap: 38px;
+  }
+  .letter-heading h2 { font-size: 39px; }
+  .letter-body { font-size: 14px; line-height: 1.75; }
+  .letter-points { margin: 34px 0 38px; }
+  .letter-points p {
+    grid-template-columns: 38px 1fr;
+    padding: 21px 0;
+    font-size: 15px;
+  }
+  .letter-closing { margin-top: 38px !important; font-size: 17px; }
   .timer-section { padding-top: 65px; padding-bottom: 65px; }
   .timer { gap: 8px; }
   .timer div { min-width: 76px; }
