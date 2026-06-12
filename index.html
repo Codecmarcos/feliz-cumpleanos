@@ -3,19 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7efe5" />
-    <title>Siete días para ti</title>
+    <meta name="theme-color" content="#e8efe8" />
+    <title>Feliz cumpleaños</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="grain" aria-hidden="true"></div>
+    <section class="access-screen" id="accessScreen">
+      <div class="access-card">
+        <span class="access-mark" aria-hidden="true">✦</span>
+        <p class="access-label">ACCESO PRIVADO</p>
+        <h1 class="access-title">Hay algo<br />esperando dentro.</h1>
+        <form class="access-form" id="accessForm">
+          <label class="sr-only" for="accessPassword">Clave de acceso</label>
+          <div class="password-field">
+            <input
+              id="accessPassword"
+              type="password"
+              placeholder="Escribe la clave"
+              autocomplete="current-password"
+              spellcheck="false"
+            />
+            <button type="submit" aria-label="Entrar">→</button>
+          </div>
+          <p class="access-error" id="accessError" role="alert" aria-live="polite"></p>
+        </form>
+        <p class="access-warning">
+          Si no sabes la contraseña, aléjate despacio. Ya hemos avisado al
+          comité de cumpleaños y no suele perdonar.
+        </p>
+      </div>
+    </section>
 
+    <div class="site-shell" id="siteShell" hidden>
     <header class="hero">
       <nav>
         <a class="brand" href="#" aria-label="Inicio">7<span>·</span>7</a>
@@ -91,6 +116,7 @@
     </footer>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

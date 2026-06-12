@@ -5,7 +5,7 @@ const days = [
     correct: 1,
     video: "dQw4w9WgXcQ",
     title: "La primera sorpresa",
-    accent: "#bd6041",
+    accent: "#496b50",
   },
   {
     question: "¿Cuántos minutos tiene una hora y media?",
@@ -13,7 +13,7 @@ const days = [
     correct: 2,
     video: "M7lc1UVf-VE",
     title: "Algo para sonreír",
-    accent: "#7e927d",
+    accent: "#66856b",
   },
   {
     question: "¿Cuál es la capital de Portugal?",
@@ -21,7 +21,7 @@ const days = [
     correct: 2,
     video: "ysz5S6PUM-U",
     title: "La tercera pieza",
-    accent: "#b08c63",
+    accent: "#365b43",
   },
   {
     question: "¿Qué animal aparece en el escudo de Madrid?",
@@ -29,7 +29,7 @@ const days = [
     correct: 1,
     video: "jNQXAC9IVRw",
     title: "A mitad del camino",
-    accent: "#7d7b9c",
+    accent: "#78957b",
   },
   {
     question: "¿Cuántos lados tiene un hexágono?",
@@ -37,7 +37,7 @@ const days = [
     correct: 1,
     video: "aqz-KE-bpKQ",
     title: "La quinta sorpresa",
-    accent: "#567c7a",
+    accent: "#56765f",
   },
   {
     question: "¿Cuál de estos instrumentos tiene teclas?",
@@ -45,7 +45,7 @@ const days = [
     correct: 2,
     video: "ScMzIvxBSi4",
     title: "Ya casi estás",
-    accent: "#9d704d",
+    accent: "#2f5940",
   },
   {
     question: "¿Qué número completa la serie: 2, 4, 6, 8...?",
@@ -53,11 +53,12 @@ const days = [
     correct: 1,
     video: "L_jWHffIx5E",
     title: "El gran final",
-    accent: "#a4483d",
+    accent: "#173f2a",
   },
 ];
 
 const STORAGE_KEY = "siete-dias-demo-progress";
+const ACCESS_KEY = "feliz-cumpleanos-access";
 const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 const state = {
   currentDay: Number(localStorage.getItem("siete-dias-demo-day") || 1),
@@ -72,6 +73,53 @@ const daySelect = document.querySelector("#daySelect");
 const todayTitle = document.querySelector("#todayTitle");
 const todayPill = document.querySelector("#todayPill");
 const toast = document.querySelector("#toast");
+const accessScreen = document.querySelector("#accessScreen");
+const accessForm = document.querySelector("#accessForm");
+const accessPassword = document.querySelector("#accessPassword");
+const accessError = document.querySelector("#accessError");
+const siteShell = document.querySelector("#siteShell");
+
+function normalizePassword(value) {
+  return value
+    .trim()
+    .toLocaleLowerCase("es")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function openSite() {
+  localStorage.setItem(ACCESS_KEY, "granted");
+  accessScreen.hidden = true;
+  siteShell.hidden = false;
+  document.body.classList.remove("access-locked");
+}
+
+function initializeAccess() {
+  if (localStorage.getItem(ACCESS_KEY) === "granted") {
+    openSite();
+    return;
+  }
+
+  document.body.classList.add("access-locked");
+  accessPassword.focus();
+}
+
+accessForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const password = normalizePassword(accessPassword.value);
+
+  if (password === "libelula110426") {
+    accessError.textContent = "";
+    openSite();
+    return;
+  }
+
+  accessForm.classList.remove("is-wrong");
+  void accessForm.offsetWidth;
+  accessForm.classList.add("is-wrong");
+  accessError.textContent = "Esa no es. El comité empieza a sospechar.";
+  accessPassword.select();
+});
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...state.unlocked]));
@@ -219,4 +267,5 @@ document.querySelector("#resetButton").addEventListener("click", () => {
   showToast("La demo ha vuelto al día 1.");
 });
 
+initializeAccess();
 render();
