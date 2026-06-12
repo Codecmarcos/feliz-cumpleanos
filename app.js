@@ -1,15 +1,31 @@
 const days = [
   {
-    question: "¿Qué planeta es conocido como el planeta rojo?",
-    answers: ["marte"],
-    hints: ["No es el más cercano al Sol.", "Su nombre viene de un dios romano.", "Tiene dos lunas."],
+    question: "Lo que para Bécquer era la poesía, para mí lo es el amor. ¿Recuerdas qué es para mí el amor?",
+    answers: [
+      "el amor eres tu",
+      "tu",
+      "yo",
+      "el amor soy yo",
+    ],
+    hints: [
+      "Bécquer escribió este verso en su famosa Rima XXI.",
+      "Alguna vez te he mencionado la respuesta.",
+      "Puedes encontrar la respuesta en el fondo de un espejo.",
+    ],
     video: "dQw4w9WgXcQ",
     title: "La primera sorpresa",
   },
   {
-    question: "¿Cuántos minutos tiene una hora y media?",
-    answers: ["90", "noventa"],
-    hints: ["Una hora son 60 minutos.", "Media hora son 30.", "Solo tienes que sumarlos."],
+    question: "¿Cuántos kilómetros separan nuestros cuerpos?",
+    answers: [
+      "420",
+      "420 km",
+      "420km",
+      "420 kilometros",
+    ],
+    hints: [
+      "No debería haber pistas porque es bastante fácil, pero bueno: también es el Día Mundial del Cannabis.",
+    ],
     video: "M7lc1UVf-VE",
     title: "Algo para sonreír",
   },
