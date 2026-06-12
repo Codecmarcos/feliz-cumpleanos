@@ -319,7 +319,10 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-.daily-challenge { padding: 105px max(7vw, 28px); }
+.daily-challenge {
+  padding: 105px max(7vw, 28px);
+  scroll-margin-top: 86px;
+}
 .question-panel {
   max-width: 1120px;
   margin: 0 auto;
@@ -394,6 +397,72 @@ h1, h2, h3 {
   max-width: 1120px;
   margin: 0 auto;
   background: var(--forest);
+}
+
+.success-panel {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 82px clamp(28px, 8vw, 100px);
+  border: 1px solid var(--line);
+  background: var(--mist);
+  text-align: center;
+}
+.success-icon {
+  width: 78px;
+  height: 78px;
+  margin: 0 auto 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--sage);
+  border-radius: 50%;
+  color: var(--forest);
+}
+.success-icon svg {
+  width: 39px;
+  height: 39px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.success-panel h2 {
+  font-size: clamp(40px, 6vw, 70px);
+  line-height: 1.02;
+}
+.success-panel > p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 30px auto 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.gift-button {
+  margin-top: 42px;
+  padding: 16px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--forest);
+  color: white;
+  background: var(--forest);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .16s ease, background .16s ease;
+}
+.gift-button:hover {
+  background: var(--leaf);
+  transform: translateY(-2px);
+}
+.gift-button svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .video-frame { position: relative; padding-top: 56.25%; }
 .video-frame iframe {
@@ -622,6 +691,16 @@ footer {
   }
   .letter-closing { margin-top: 38px !important; font-size: 17px; }
   .daily-challenge { padding-top: 72px; padding-bottom: 72px; }
+  .daily-challenge { scroll-margin-top: 118px; }
+  .success-panel { padding: 60px 24px; }
+  .success-icon { margin-bottom: 30px; }
+  .success-panel h2 { font-size: 39px; }
+  .success-panel > p:not(.eyebrow) { font-size: 14px; line-height: 1.7; }
+  .gift-button {
+    width: 100%;
+    margin-top: 35px;
+    justify-content: center;
+  }
   .question-main { padding-top: 42px; padding-bottom: 45px; }
   .question-main h2 { font-size: 38px; }
   .answer-field { align-items: flex-end; }

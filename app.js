@@ -12,6 +12,10 @@ const days = [
       "Alguna vez te he mencionado la respuesta.",
       "Puedes encontrar la respuesta en el fondo de un espejo.",
     ],
+    successTitle: "Correcto. Sí, has acertado.",
+    successMessage:
+      "Aunque tampoco era muy difícil. Es un secreto a voces que, para mí, el amor lleva tu nombre. Espero que te guste el regalo de hoy.",
+    giftButton: "Abrir mi primer regalo",
     video: "dQw4w9WgXcQ",
     title: "La primera sorpresa",
   },
@@ -26,6 +30,10 @@ const days = [
     hints: [
       "No debería haber pistas porque es bastante fácil, pero bueno: también es el Día Mundial del Cannabis.",
     ],
+    successTitle: "Bien. Gracias por volver.",
+    successMessage:
+      "Un día más has acertado. ¿Quién no iba a recordar el número de kilómetros que tantos dolores de cabeza nos da? Recuerda que la distancia solo separa cuerpos. Mi corazón y mi mente son tuyos y estarán donde quieras que vayas. Disfruta de tu regalo del día 2.",
+    giftButton: "Abrir el regalo del día 2",
     video: "M7lc1UVf-VE",
     title: "Algo para sonreír",
   },
@@ -76,6 +84,7 @@ const ACCESS_KEY = "feliz-cumpleanos-access";
 const completedDays = new Set(
   JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]"),
 );
+const revealedGifts = new Set();
 
 const accessScreen = document.querySelector("#accessScreen");
 const siteShell = document.querySelector("#siteShell");
@@ -186,6 +195,40 @@ function renderDailyChallenge() {
   const day = days[journey.dayIndex];
   dayEyebrow.textContent = `DÍA ${journey.dayIndex + 1} DE 7`;
 
+  if (
+    completedDays.has(journey.dayIndex) &&
+    !revealedGifts.has(journey.dayIndex)
+  ) {
+    dailyChallenge.innerHTML = `
+      <article class="success-panel">
+        <div class="success-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64">
+            <path d="M10 28h44v27H10zM7 19h50v9H7zM32 19v36" />
+            <path d="M31 19H18c-6 0-7-9-1-10 7-1 14 10 14 10ZM33 19h13c6 0 7-9 1-10-7-1-14 10-14 10Z" />
+          </svg>
+        </div>
+        <p class="eyebrow">RESPUESTA CORRECTA</p>
+        <h2>${day.successTitle || "Has acertado."}</h2>
+        <p>${day.successMessage || "Tu regalo de hoy ya está preparado."}</p>
+        <button class="gift-button" id="revealGift" type="button">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M5 13h22v15H5zM3 8h26v5H3zM16 8v20M15 8H9C5 8 5 3 9 3c4 0 6 5 6 5ZM17 8h6c4 0 4-5 0-5-4 0-6 5-6 5Z" />
+          </svg>
+          ${day.giftButton || "Abrir mi regalo"}
+        </button>
+      </article>
+    `;
+
+    document.querySelector("#revealGift").addEventListener("click", () => {
+      revealedGifts.add(journey.dayIndex);
+      renderDailyChallenge();
+      window.setTimeout(() => {
+        dailyChallenge.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 0);
+    });
+    return;
+  }
+
   if (completedDays.has(journey.dayIndex)) {
     dailyChallenge.innerHTML = `
       <article class="video-panel">
@@ -251,6 +294,9 @@ function renderDailyChallenge() {
     saveProgress();
     renderCounts();
     renderDailyChallenge();
+    window.setTimeout(() => {
+      dailyChallenge.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
     showToast("Respuesta correcta. Tu regalo está desbloqueado.");
   });
 }
