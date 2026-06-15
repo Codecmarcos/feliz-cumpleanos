@@ -136,13 +136,11 @@ const days = [
   },
 ];
 
-// Cambia esta fecha cuando se decida el día real de comienzo.
-const START_DATE = "2026-06-12T00:00:00+02:00";
+const START_DATE = "2026-06-22T00:00:00+02:00";
 const ACCESS_PASSWORD = "libelula110426";
 const ARCHIVE_PASSWORD = "archivo110426";
 const PROGRESS_KEY = "feliz-cumpleanos-completed-days";
 const ACCESS_KEY = "feliz-cumpleanos-access";
-let reviewDayIndex = null;
 
 const completedDays = new Set(
   JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]"),
@@ -183,9 +181,8 @@ function getJourneyState() {
   const now = Date.now();
   const start = new Date(START_DATE).getTime();
   const elapsed = now - start;
-  const realDayIndex = Math.floor(elapsed / 86400000);
-  const dayIndex = reviewDayIndex ?? realDayIndex;
-  const nextReset = start + (realDayIndex + 1) * 86400000;
+  const dayIndex = Math.floor(elapsed / 86400000);
+  const nextReset = start + (dayIndex + 1) * 86400000;
 
   return {
     dayIndex,
@@ -508,51 +505,6 @@ archiveForm.addEventListener("submit", (event) => {
 });
 
 window.addEventListener("hashchange", route);
-
-const reviewControls = document.querySelector("#reviewControls");
-const reviewDayLabel = document.querySelector("#reviewDayLabel");
-const reviewPrevious = document.querySelector("#reviewPrevious");
-const reviewNext = document.querySelector("#reviewNext");
-const reviewToday = document.querySelector("#reviewToday");
-
-function updateReviewControls() {
-  const realDayIndex = Math.floor(
-    (Date.now() - new Date(START_DATE).getTime()) / 86400000,
-  );
-  const visibleDay = reviewDayIndex ?? Math.min(Math.max(realDayIndex, 0), days.length - 1);
-
-  reviewDayLabel.textContent = `Día ${visibleDay + 1} de 7`;
-  reviewPrevious.disabled = visibleDay === 0;
-  reviewNext.disabled = visibleDay === days.length - 1;
-  reviewToday.hidden = reviewDayIndex === null;
-}
-
-function showReviewDay(dayIndex) {
-  reviewDayIndex = Math.min(Math.max(dayIndex, 0), days.length - 1);
-  window.location.hash = "#inicio";
-  renderDailyChallenge();
-  updateReviewControls();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-reviewPrevious.addEventListener("click", () => {
-  const current = getJourneyState().dayIndex;
-  showReviewDay(current - 1);
-});
-
-reviewNext.addEventListener("click", () => {
-  const current = getJourneyState().dayIndex;
-  showReviewDay(current + 1);
-});
-
-reviewToday.addEventListener("click", () => {
-  reviewDayIndex = null;
-  renderDailyChallenge();
-  updateReviewControls();
-});
-
-reviewControls.hidden = false;
-updateReviewControls();
 renderCounts();
 initializeAccess();
 updateTimer();

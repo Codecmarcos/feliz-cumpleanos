@@ -656,54 +656,6 @@ footer {
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-.review-controls {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 60;
-  width: 210px;
-  padding: 13px;
-  border: 1px solid rgba(255,255,255,.18);
-  color: white;
-  background: var(--forest);
-  box-shadow: 0 14px 35px rgba(23,63,42,.22);
-}
-.review-controls > span {
-  display: block;
-  margin-bottom: 9px;
-  color: #bdd0c0;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: .14em;
-}
-.review-controls > div {
-  display: grid;
-  grid-template-columns: 32px 1fr 32px;
-  align-items: center;
-  gap: 7px;
-}
-.review-controls button {
-  height: 32px;
-  border: 1px solid rgba(255,255,255,.25);
-  color: white;
-  background: transparent;
-  cursor: pointer;
-}
-.review-controls button:disabled { opacity: .25; cursor: default; }
-.review-controls strong {
-  font-size: 12px;
-  font-weight: 500;
-  text-align: center;
-}
-.review-controls .review-today {
-  width: 100%;
-  height: auto;
-  margin-top: 9px;
-  padding: 7px;
-  color: #d8e3d9;
-  font-size: 9px;
-}
-
 @keyframes shake {
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
@@ -799,11 +751,6 @@ footer {
   .archive-number { font-size: 33px; }
   .archive-item h2 { font-size: 24px; }
   footer { flex-direction: column; gap: 5px; }
-  .review-controls {
-    right: 10px;
-    bottom: 10px;
-    width: 190px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
