@@ -294,6 +294,15 @@ function renderDailyChallenge() {
   if (completedDays.has(journey.dayIndex)) {
     dailyChallenge.innerHTML = `
       <article class="video-panel">
+        <div class="reaction-reminder">
+          <p class="eyebrow light">AVISO IMPORTANTE</p>
+          <h2>Antes de darle al play...</h2>
+          <p>
+            Acuérdate de grabar tu reacción. Este regalo viene con una pequeña
+            cláusula administrativa: quien recibe poema, entrega carita de
+            emoción para el archivo histórico.
+          </p>
+        </div>
         <div class="video-frame">
           <iframe
             src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
