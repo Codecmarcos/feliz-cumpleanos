@@ -136,10 +136,10 @@ const days = [
   },
 ];
 
-const START_DATE = "2026-06-22T00:00:00+02:00";
+const START_DATE = "2026-06-22T00:00:00-04:00";
 const ACCESS_PASSWORD = "libelula110426";
 const ARCHIVE_PASSWORD = "archivo110426";
-const PROGRESS_KEY = "feliz-cumpleanos-completed-days";
+const PROGRESS_KEY = "feliz-cumpleanos-completed-days-punta-cana";
 const ACCESS_KEY = "feliz-cumpleanos-access";
 
 const completedDays = new Set(
