@@ -16,8 +16,8 @@ const days = [
     successMessage:
       "Aunque tampoco era muy difícil. Es un secreto a voces que, para mí, el amor lleva tu nombre. Espero que te guste el regalo de hoy.",
     giftButton: "Abrir mi primer regalo",
-    video: "dQw4w9WgXcQ",
-    title: "La primera sorpresa",
+    video: "assets/videos/dia-1-el-nombre-del-amor.m4v",
+    title: "El Nombre Del Amor",
   },
   {
     question: "¿Cuántos kilómetros separan nuestros cuerpos?",
@@ -234,6 +234,26 @@ function renderCounts() {
   archiveCompletedCount.textContent = completedDays.size;
 }
 
+function renderVideo(day) {
+  if (day.video.includes("/")) {
+    return `
+      <video controls preload="metadata" playsinline>
+        <source src="${day.video}" type="video/mp4" />
+        Tu navegador no puede reproducir este video.
+      </video>
+    `;
+  }
+
+  return `
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
+      title="${day.title}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  `;
+}
+
 function renderDailyChallenge() {
   const journey = getJourneyState();
   renderAdminControls();
@@ -313,12 +333,7 @@ function renderDailyChallenge() {
           </p>
         </div>
         <div class="video-frame">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
-            title="${day.title}"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+          ${renderVideo(day)}
         </div>
         <div class="video-meta">
           <div><span>REGALO DE HOY</span><strong>${day.title}</strong></div>
@@ -420,12 +435,7 @@ function renderArchive() {
             <h2>${day.title}</h2>
           </div>
           <div class="archive-video">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/${day.video}?rel=0"
-              title="${day.title}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+            ${renderVideo(day)}
           </div>
         </article>
       `,
