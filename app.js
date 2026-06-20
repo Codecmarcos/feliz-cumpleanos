@@ -138,14 +138,17 @@ const days = [
 
 const START_DATE = "2026-06-22T00:00:00-04:00";
 const ACCESS_PASSWORD = "libelula110426";
+const ADMIN_PASSWORD = "admin110426";
 const ARCHIVE_PASSWORD = "archivo110426";
 const PROGRESS_KEY = "feliz-cumpleanos-completed-days-punta-cana";
 const ACCESS_KEY = "feliz-cumpleanos-access-v2";
+const ADMIN_ACCESS_KEY = "feliz-cumpleanos-admin-access";
 
 const completedDays = new Set(
   JSON.parse(localStorage.getItem(PROGRESS_KEY) || "[]"),
 );
 const revealedGifts = new Set();
+let adminDayIndex = null;
 
 const accessScreen = document.querySelector("#accessScreen");
 const siteShell = document.querySelector("#siteShell");
@@ -181,8 +184,9 @@ function getJourneyState() {
   const now = Date.now();
   const start = new Date(START_DATE).getTime();
   const elapsed = now - start;
-  const dayIndex = Math.floor(elapsed / 86400000);
-  const nextReset = start + (dayIndex + 1) * 86400000;
+  const realDayIndex = Math.floor(elapsed / 86400000);
+  const dayIndex = adminDayIndex ?? realDayIndex;
+  const nextReset = start + (realDayIndex + 1) * 86400000;
 
   return {
     dayIndex,
@@ -205,9 +209,13 @@ function showToast(message) {
 
 function openSite() {
   localStorage.setItem(ACCESS_KEY, "granted");
+  if (isAdmin() && adminDayIndex === null && getRealDayIndex() < 0) {
+    adminDayIndex = 0;
+  }
   accessScreen.hidden = true;
   siteShell.hidden = false;
   document.body.classList.remove("access-locked");
+  renderAdminControls();
   route();
 }
 
@@ -228,6 +236,7 @@ function renderCounts() {
 
 function renderDailyChallenge() {
   const journey = getJourneyState();
+  renderAdminControls();
 
   if (!journey.hasStarted) {
     dayEyebrow.textContent = "PRÓXIMAMENTE";
@@ -483,8 +492,20 @@ function route() {
 
 accessForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  const proposedPassword = normalize(accessPassword.value);
 
-  if (normalize(accessPassword.value) === ACCESS_PASSWORD) {
+  if (proposedPassword === ADMIN_PASSWORD) {
+    localStorage.setItem(ADMIN_ACCESS_KEY, "granted");
+    adminDayIndex = Math.min(Math.max(getRealDayIndex(), 0), days.length - 1);
+    accessError.textContent = "";
+    openSite();
+    showToast("Modo administrador activado.");
+    return;
+  }
+
+  if (proposedPassword === ACCESS_PASSWORD) {
+    localStorage.removeItem(ADMIN_ACCESS_KEY);
+    adminDayIndex = null;
     accessError.textContent = "";
     openSite();
     return;
@@ -514,6 +535,64 @@ archiveForm.addEventListener("submit", (event) => {
 });
 
 window.addEventListener("hashchange", route);
+
+function isAdmin() {
+  return localStorage.getItem(ADMIN_ACCESS_KEY) === "granted";
+}
+
+function getRealDayIndex() {
+  return Math.floor(
+    (Date.now() - new Date(START_DATE).getTime()) / 86400000,
+  );
+}
+
+function showAdminDay(dayIndex) {
+  adminDayIndex = Math.min(Math.max(dayIndex, 0), days.length - 1);
+  window.location.hash = "#inicio";
+  renderDailyChallenge();
+  renderAdminControls();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderAdminControls() {
+  document.querySelector("#adminControls")?.remove();
+
+  if (!isAdmin() || siteShell.hidden) {
+    return;
+  }
+
+  const visibleDay = adminDayIndex ?? Math.min(Math.max(getRealDayIndex(), 0), days.length - 1);
+  const controls = document.createElement("aside");
+  controls.className = "admin-controls";
+  controls.id = "adminControls";
+  controls.setAttribute("aria-label", "Controles de administrador");
+  controls.innerHTML = `
+    <span>ADMIN</span>
+    <div>
+      <button id="adminPrevious" type="button" ${visibleDay === 0 ? "disabled" : ""} aria-label="Ver día anterior">←</button>
+      <strong>Día ${visibleDay + 1} de 7</strong>
+      <button id="adminNext" type="button" ${visibleDay === days.length - 1 ? "disabled" : ""} aria-label="Ver día siguiente">→</button>
+    </div>
+    <button class="admin-real-day" id="adminRealDay" type="button" ${adminDayIndex === null ? "hidden" : ""}>Volver al día real</button>
+  `;
+
+  siteShell.append(controls);
+
+  controls.querySelector("#adminPrevious").addEventListener("click", () => {
+    showAdminDay(visibleDay - 1);
+  });
+
+  controls.querySelector("#adminNext").addEventListener("click", () => {
+    showAdminDay(visibleDay + 1);
+  });
+
+  controls.querySelector("#adminRealDay").addEventListener("click", () => {
+    adminDayIndex = null;
+    renderDailyChallenge();
+    renderAdminControls();
+  });
+}
+
 renderCounts();
 initializeAccess();
 updateTimer();
