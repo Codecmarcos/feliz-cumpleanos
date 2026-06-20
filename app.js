@@ -190,9 +190,12 @@ function getJourneyState() {
 
   return {
     dayIndex,
+    realDayIndex,
     nextReset,
     hasStarted: dayIndex >= 0,
     hasEnded: dayIndex >= days.length,
+    realHasStarted: realDayIndex >= 0,
+    realHasEnded: realDayIndex >= days.length,
   };
 }
 
@@ -454,9 +457,9 @@ function updateTimer() {
   const journey = getJourneyState();
   let remaining = journey.nextReset - Date.now();
 
-  if (!journey.hasStarted) {
+  if (!journey.realHasStarted) {
     remaining = new Date(START_DATE).getTime() - Date.now();
-  } else if (journey.hasEnded) {
+  } else if (journey.realHasEnded) {
     remaining = 0;
   }
 
