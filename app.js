@@ -90,8 +90,8 @@ const days = [
     successMessage:
       "Espero que estés disfrutando del viaje y de tus amigas. Me alegra haber hecho este regalo así porque, de alguna forma, me siento presente en tu día a día. PD: me acabo de sentar en tu sofá mientras tú curras porque se te van los ojos, tramposa. Jajaja. Te amo mucho, mi niña bonita.",
     giftButton: "Abrir el regalo del día 5",
-    video: "aqz-KE-bpKQ",
-    title: "La quinta sorpresa",
+    video: "assets/videos/dia-5-el-aroma-de-las-flores.m4v",
+    title: "El aroma de las flores",
   },
   {
     question: "¿Quién ha leído nuestra conversación desde el principio y nos da su opinión cuando no llegamos a un entendimiento intermedio?",
