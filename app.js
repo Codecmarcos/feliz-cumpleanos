@@ -298,11 +298,6 @@ function renderDailyChallenge() {
         <p class="eyebrow">RESPUESTA CORRECTA</p>
         <h2>${day.successTitle || "Has acertado."}</h2>
         <p>${day.successMessage || "Tu regalo de hoy ya está preparado."}</p>
-        <p class="success-reminder">
-          Aviso importante antes de abrir el regalo: acuérdate de grabar tu
-          reacción. Este poema viene con una pequeña cláusula administrativa:
-          quien recibe emoción, entrega carita para el archivo histórico.
-        </p>
         <button class="gift-button" id="revealGift" type="button">
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <path d="M5 13h22v15H5zM3 8h26v5H3zM16 8v20M15 8H9C5 8 5 3 9 3c4 0 6 5 6 5ZM17 8h6c4 0 4-5 0-5-4 0-6 5-6 5Z" />
