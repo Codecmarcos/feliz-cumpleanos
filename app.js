@@ -17,7 +17,7 @@ const days = [
       "Aunque tampoco era muy difícil. Es un secreto a voces que, para mí, el amor lleva tu nombre. Espero que te guste el regalo de hoy.",
     giftButton: "Abrir mi primer regalo",
     video: "assets/videos/dia-1-el-nombre-del-amor.m4v",
-    title: "El Nombre Del Amor",
+    title: "El Nombre del amor",
   },
   {
     question: "¿Cuántos kilómetros separan nuestros cuerpos?",
@@ -34,8 +34,8 @@ const days = [
     successMessage:
       "Un día más has acertado. ¿Quién no iba a recordar el número de kilómetros que tantos dolores de cabeza nos da? Recuerda que la distancia solo separa cuerpos. Mi corazón y mi mente son tuyos y estarán donde quieras que vayas. Disfruta de tu regalo del día 2.",
     giftButton: "Abrir el regalo del día 2",
-    video: "M7lc1UVf-VE",
-    title: "Algo para sonreír",
+    video: "assets/videos/dia-2-420-putos-kilometros.m4v",
+    title: "420 Putos Kilómetros",
   },
   {
     question: "¿Qué es aquello que jamás podré decirte?",
@@ -54,8 +54,8 @@ const days = [
     successMessage:
       "Vaya, esta no era tan fácil. ¿Has necesitado las pistas? Jajaja. Pues sí, en efecto: las mentiras representan el principio del fin. No es solo que se me den mal, sino que son incompatibles con el amor. ¿Podrás oír unas cuantas?",
     giftButton: "Abrir el regalo del día 3",
-    video: "ysz5S6PUM-U",
-    title: "La tercera pieza",
+    video: "assets/videos/dia-3-las-cosas-que-nunca-te-dire.m4v",
+    title: "Las cosas que nunca te diré",
   },
   {
     question: "Hoy es tu cumpleaños, ¡hay que hacer algo especial! Subamos la dificultad: ¿qué diosa de la mitología griega se enamoró perdidamente de un hombre más joven que ella?",
@@ -304,6 +304,11 @@ function renderDailyChallenge() {
         <p class="eyebrow">RESPUESTA CORRECTA</p>
         <h2>${day.successTitle || "Has acertado."}</h2>
         <p>${day.successMessage || "Tu regalo de hoy ya está preparado."}</p>
+        <p class="success-reminder">
+          Aviso importante antes de abrir el regalo: acuérdate de grabar tu
+          reacción. Este poema viene con una pequeña cláusula administrativa:
+          quien recibe emoción, entrega carita para el archivo histórico.
+        </p>
         <button class="gift-button" id="revealGift" type="button">
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <path d="M5 13h22v15H5zM3 8h26v5H3zM16 8v20M15 8H9C5 8 5 3 9 3c4 0 6 5 6 5ZM17 8h6c4 0 4-5 0-5-4 0-6 5-6 5Z" />
@@ -326,21 +331,12 @@ function renderDailyChallenge() {
   if (completedDays.has(journey.dayIndex)) {
     dailyChallenge.innerHTML = `
       <article class="video-panel">
-        <div class="reaction-reminder">
-          <p class="eyebrow light">AVISO IMPORTANTE</p>
-          <h2>Antes de darle al play...</h2>
-          <p>
-            Acuérdate de grabar tu reacción. Este regalo viene con una pequeña
-            cláusula administrativa: quien recibe poema, entrega carita de
-            emoción para el archivo histórico.
-          </p>
+        <div class="video-title">
+          <p class="eyebrow light">POEMA DEL DÍA ${journey.dayIndex + 1}</p>
+          <h2>${day.title}</h2>
         </div>
         <div class="video-frame">
           ${renderVideo(day)}
-        </div>
-        <div class="video-meta">
-          <div><span>REGALO DE HOY</span><strong>${day.title}</strong></div>
-          <span>Día ${journey.dayIndex + 1} de 7</span>
         </div>
       </article>
     `;
