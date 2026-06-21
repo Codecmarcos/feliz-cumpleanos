@@ -70,8 +70,8 @@ const days = [
     successMessage:
       "Me alegro mucho de que estés tomándotelo en serio. Hoy es tu día, mi amor. El primer cumpleaños de muchos a tu lado. No diría que soy un Adonis, pero sí que tuve su suerte al encontrar a mi Afrodita. Te amo con locura. Muchas felicidades, mi chica guapa.",
     giftButton: "Abrir mi regalo de cumpleaños",
-    video: "jNQXAC9IVRw",
-    title: "A mitad del camino",
+    video: "assets/videos/dia-4-afrodonis-y-adonita.m4v",
+    title: "Afrodonis y Adonita",
   },
   {
     question: "En el mundo hay un montón de seres vivos. Este te encanta, y más ahora que le estamos cambiando el significado a su aroma. ¿De qué ser vivo estamos hablando?",
