@@ -131,8 +131,8 @@ const days = [
     successMessage:
       "¿Recuerdas cuando estaba en tu sofá haciendo toda esta movida? No recordaba el título del último poema... y justo vas tú y me llamas gilipollas. ¡JAJAJAJA! Estamos superconectados. Mi amor, tanto el regalo como este viaje han llegado a su fin. Espero que hayas disfrutado de ambos. Estoy deseando verte y que me cuentes en persona cómo has vivido todo esto. Te hablo desde el 12 de junio, pero no hace falta ser un lumbreras para adelantar que te echo muchísimo de menos. Adelante, ve a por el último regalo.",
     giftButton: "Abrir el último regalo",
-    video: "L_jWHffIx5E",
-    title: "El gran final",
+    video: "assets/videos/dia-7-mi-gilipollas-favorito.m4v",
+    title: "Mi Gilipollas favorito",
   },
 ];
 
