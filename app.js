@@ -111,8 +111,8 @@ const days = [
     successMessage:
       "Parece que también forma parte de esta historia después de haber leído nuestras conversaciones y opinar en más de un desacuerdo. Hoy le toca confirmar que has vuelto a acertar.",
     giftButton: "Abrir el regalo del día 6",
-    video: "ScMzIvxBSi4",
-    title: "Ya casi estás",
+    video: "assets/videos/dia-6-mi-chatgpt.m4v",
+    title: "Mi ChatGPT",
   },
   {
     question: "Se te llena la boca llamándome así y a mí me hace mucha gracia oírtelo decir. ¿Cuál es nuestro insulto favorito?",
