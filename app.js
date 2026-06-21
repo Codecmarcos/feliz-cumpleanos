@@ -139,7 +139,6 @@ const days = [
 const START_DATE = "2026-06-22T00:00:00-04:00";
 const ACCESS_PASSWORD = "libelula110426";
 const ADMIN_PASSWORD = "admin110426";
-const ARCHIVE_PASSWORD = "archivo110426";
 const PROGRESS_KEY = "feliz-cumpleanos-completed-days-punta-cana";
 const ACCESS_KEY = "feliz-cumpleanos-access-v2";
 const ADMIN_ACCESS_KEY = "feliz-cumpleanos-admin-access";
@@ -157,11 +156,6 @@ const accessPassword = document.querySelector("#accessPassword");
 const accessError = document.querySelector("#accessError");
 const homePage = document.querySelector("#homePage");
 const archivePage = document.querySelector("#archivePage");
-const archiveLocked = document.querySelector("#archiveLocked");
-const archiveOpen = document.querySelector("#archiveOpen");
-const archiveForm = document.querySelector("#archiveForm");
-const archivePassword = document.querySelector("#archivePassword");
-const archiveError = document.querySelector("#archiveError");
 const dailyChallenge = document.querySelector("#dailyChallenge");
 const archiveGrid = document.querySelector("#archiveGrid");
 const completedCount = document.querySelector("#completedCount");
@@ -411,7 +405,7 @@ function renderDailyChallenge() {
 
 function renderArchive() {
   const journey = getJourneyState();
-  const previousDays = Math.min(Math.max(journey.dayIndex, 0), days.length);
+  const previousDays = Math.min(Math.max(journey.realDayIndex, 0), days.length);
 
   if (previousDays === 0) {
     archiveGrid.innerHTML = `
@@ -440,13 +434,6 @@ function renderArchive() {
       `,
     )
     .join("");
-}
-
-function openArchive() {
-  archiveLocked.hidden = true;
-  archiveOpen.hidden = false;
-  renderArchive();
-  renderCounts();
 }
 
 function updateTimer() {
@@ -487,11 +474,8 @@ function route() {
   });
 
   if (isArchive) {
-    archiveLocked.hidden = false;
-    archiveOpen.hidden = true;
-    archivePassword.value = "";
-    archiveError.textContent = "";
-    window.setTimeout(() => archivePassword.focus(), 0);
+    renderArchive();
+    renderCounts();
   } else {
     renderDailyChallenge();
   }
@@ -525,22 +509,6 @@ accessForm.addEventListener("submit", (event) => {
   void accessForm.offsetWidth;
   accessForm.classList.add("is-wrong");
   accessPassword.select();
-});
-
-archiveForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  if (normalize(archivePassword.value) === ARCHIVE_PASSWORD) {
-    archiveError.textContent = "";
-    openArchive();
-    return;
-  }
-
-  archiveError.textContent = "Inexpugnable, te avisamos. Esa llave no abre nada.";
-  archiveForm.classList.remove("is-wrong");
-  void archiveForm.offsetWidth;
-  archiveForm.classList.add("is-wrong");
-  archivePassword.select();
 });
 
 window.addEventListener("hashchange", route);

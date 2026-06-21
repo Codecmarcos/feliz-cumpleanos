@@ -579,11 +579,9 @@ h1, h2, h3 {
   padding: 100px max(7vw, 28px);
   background: var(--pale);
 }
-.archive-locked { max-width: 1120px; margin: 0 auto; }
-.archive-locked h1 { max-width: 900px; }
-.archive-copy {
+.archive-welcome {
   max-width: 920px;
-  margin: 65px 0 0 auto;
+  margin: -25px 0 75px auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 45px;
@@ -591,11 +589,7 @@ h1, h2, h3 {
   font-size: 15px;
   line-height: 1.8;
 }
-.archive-copy p { margin: 0; }
-.archive-form {
-  width: min(100%, 560px);
-  margin: 70px 0 0 auto;
-}
+.archive-welcome p { margin: 0; }
 .archive-heading {
   margin-bottom: 75px;
   display: flex;
@@ -809,8 +803,7 @@ footer {
   .answer-field button { padding-bottom: 15px; font-size: 12px; }
   .archive-invitation { grid-template-columns: 1fr; gap: 42px; padding-top: 70px; padding-bottom: 70px; }
   .archive-page { padding-top: 70px; padding-bottom: 70px; }
-  .archive-copy { grid-template-columns: 1fr; gap: 16px; margin-top: 50px; font-size: 14px; }
-  .archive-form { margin-top: 50px; }
+  .archive-welcome { grid-template-columns: 1fr; gap: 16px; margin-top: -25px; margin-bottom: 55px; font-size: 14px; }
   .archive-heading { align-items: flex-start; flex-direction: column; }
   .archive-item { grid-template-columns: 55px 1fr; gap: 18px; }
   .archive-number { font-size: 33px; }

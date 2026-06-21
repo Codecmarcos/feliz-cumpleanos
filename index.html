@@ -131,9 +131,10 @@
             <div>
               <p>
                 Desde la dirección se recomienda contestar la pregunta y
-                descubrir el regalo antes de que el contador se reinicie. Si
-                te has perdido alguno, tranquila: lo estamos archivando. Pero
-                cuidado con entrar... no todo es tan fácil como parece.
+                descubrir el regalo antes de que el contador se reinicie. Pero
+                si algún día el viaje, las amigas o la vida se ponen por
+                delante, tranquila: cuando pase su turno, el poema quedará
+                guardado aquí para volver a verlo sin drama administrativo.
               </p>
               <a class="text-link light-link" href="#archivo">Entrar al archivo →</a>
             </div>
@@ -141,55 +142,34 @@
         </section>
 
         <section class="archive-page" id="archivePage" hidden>
-          <div class="archive-locked" id="archiveLocked">
-            <p class="eyebrow">ARCHIVO · ACCESO RESTRINGIDO</p>
-            <h1>¿Aaaah, vienes<br />buscando algo?</h1>
-            <div class="archive-copy">
-              <p>
-                ¿Ayer no pudiste ver el vídeo y te lo has perdido? Lo siento
-                mucho, pero el archivo está defendido por una contraseña
-                inexpugnable que solo tiene el administrador. Puedes
-                pedírsela, pero... ¿le vas a contar por qué no abriste tu
-                regalo?
-              </p>
-              <p>
-                Si estás aquí porque un vídeo te gustó mucho y quieres volver
-                a verlo, no te preocupes: registramos los días que has
-                completado. Si los haces todos, cuando termine el viaje podrás
-                descargarlos. Pero para eso... más vale que sea cierto el
-                propósito de tu visita.
-              </p>
+          <div class="archive-heading">
+            <div>
+              <p class="eyebrow">ARCHIVO DE REGALOS</p>
+              <h1>Los días<br />que ya pasaron.</h1>
             </div>
-
-            <form class="line-form archive-form" id="archiveForm">
-              <label class="sr-only" for="archivePassword">Clave del archivo</label>
-              <div class="line-field">
-                <input
-                  id="archivePassword"
-                  type="password"
-                  placeholder="Clave del administrador"
-                  autocomplete="off"
-                  spellcheck="false"
-                />
-                <button type="submit" aria-label="Abrir archivo">→</button>
-              </div>
-              <p class="form-error" id="archiveError" role="alert" aria-live="polite"></p>
-            </form>
+            <div class="completion-count">
+              <strong id="archiveCompletedCount">0</strong>
+              <span>días vistos<br />de siete</span>
+            </div>
           </div>
 
-          <div class="archive-open" id="archiveOpen" hidden>
-            <div class="archive-heading">
-              <div>
-                <p class="eyebrow">ARCHIVO DESCLASIFICADO</p>
-                <h1>Los días<br />que ya pasaron.</h1>
-              </div>
-              <div class="completion-count">
-                <strong id="archiveCompletedCount">0</strong>
-                <span>días vistos<br />de siete</span>
-              </div>
-            </div>
-            <div class="archive-grid" id="archiveGrid"></div>
+          <div class="archive-welcome">
+            <p>
+              Bienvenida al archivo: ese sitio donde van a parar los regalos
+              cuando ya han cumplido su misión del día. Si se te escapó alguno,
+              respira. Si vuelves porque uno te gustó demasiado, también nos
+              parece una explicación absolutamente válida.
+            </p>
+            <p>
+              Aquí aparecerán los poemas cuando su contador haya llegado a
+              cero y ya formen parte de la historia oficial. Lo de vivirlos en
+              su día sigue teniendo encanto, pero tampoco vamos a ponernos
+              dramáticos: hay viajes, amigas, planes y una vida preciosa que
+              atender.
+            </p>
           </div>
+
+          <div class="archive-grid" id="archiveGrid"></div>
         </section>
       </main>
 
