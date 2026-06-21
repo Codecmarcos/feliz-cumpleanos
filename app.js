@@ -400,7 +400,9 @@ function renderDailyChallenge() {
 
 function renderArchive() {
   const journey = getJourneyState();
-  const previousDays = Math.min(Math.max(journey.realDayIndex, 0), days.length);
+  const archiveDayIndex =
+    isAdmin() && adminDayIndex !== null ? journey.dayIndex : journey.realDayIndex;
+  const previousDays = Math.min(Math.max(archiveDayIndex, 0), days.length);
 
   if (previousDays === 0) {
     archiveGrid.innerHTML = `
